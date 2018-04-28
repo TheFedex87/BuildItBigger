@@ -6,12 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import butterknife.BindView;
 
 /**
  * Created by feder on 28/04/2018.
  */
 
 public class LibJokeFragment extends Fragment {
+    View root;
+
     public LibJokeFragment(){
 
     }
@@ -19,7 +24,12 @@ public class LibJokeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_lib_joke, container, false);
+        root = inflater.inflate(R.layout.fragment_lib_joke, container, false);
+
         return root ;
+    }
+
+    public void setJoke(String joke){
+        ((TextView)root.findViewById(R.id.joke)).setText(joke);
     }
 }

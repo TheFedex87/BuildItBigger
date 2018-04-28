@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.udacity.andjokeslilb.LibMainActivity;
 import com.example.udacity.jokesprovider.JokesProvider;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -63,7 +65,12 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 JokesProvider jokesProvider = new JokesProvider();
-                joke.setText(jokesProvider.getJoke());
+                //joke.setText(jokesProvider.getJoke());
+
+                Intent intent = new Intent(context, LibMainActivity.class);
+                intent.putExtra("JOKE", jokesProvider.getJoke());
+
+                startActivity(intent);
             }
         });
 
