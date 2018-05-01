@@ -13,6 +13,18 @@ buildscript {
     }
 }
 
+task runAndTestGce {
+    group "verification"
+
+    dependsOn ":backend:appengineStart"
+    dependsOn ":app:check"
+    dependsOn ":app:connectedCheck"
+    dependsOn ":backend:appengineStop"
+
+    tasks.findByPath(':app:check').mustRunAfter ':backend:appengineStart'
+    tasks.findByPath(':app:connectedCheck').mustRunAfter ':backend:appengineStart'
+}
+
 allprojects {
     repositories {
         jcenter()
