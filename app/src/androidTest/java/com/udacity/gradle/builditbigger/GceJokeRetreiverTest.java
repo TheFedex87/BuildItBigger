@@ -1,6 +1,5 @@
 package com.udacity.gradle.builditbigger;
 
-import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -15,6 +14,8 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
 
 /**
@@ -28,15 +29,9 @@ public class GceJokeRetreiverTest {
     @Rule
     public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
-    @Before
-    public void registerHidlingResource() {
-        idlingResource = activityTestRule.getActivity().getIdlingResource();
-        IdlingRegistry.getInstance().register(idlingResource);
-    }
-
     @Test
-    public void TestTest(){
+    public void CheckGceReturnsAJoke(){
         onView(withId(R.id.say_a_joke)).perform(click());
-        onView(withId(R.id.joke)).check(matches(not(withText(""))));
+        onView(withId(R.id.joke)).check(matches(allOf(not(withText("")), not(withText(containsString("failed to connect"))))));
     }
 }

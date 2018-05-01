@@ -5,10 +5,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
@@ -26,15 +22,12 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.udacity.gradle.builditbigger.IdlingResource.SimpleIdlingResource;
 import com.udacity.gradle.builditbigger.backend.jokesApi.JokesApi;
 
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.support.v4.content.ContextCompat.startActivity;
 
 
 /**
@@ -100,8 +93,6 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-        ((MainActivity)context).getIdlingResource();
-
         return root;
     }
 
@@ -136,9 +127,6 @@ public class MainActivityFragment extends Fragment {
             String name = params[0].second;
 
             try {
-                if (((MainActivity)context).simpleIdlingResource != null) {
-                    ((MainActivity)context).simpleIdlingResource.setIdleState(false);
-                }
                 return myApiService.getJoke(name).execute().getData();
             } catch (IOException e) {
                 return e.getMessage();
@@ -162,10 +150,6 @@ public class MainActivityFragment extends Fragment {
                     containerLayout.setVisibility(View.VISIBLE);
                 }
             }, 500);
-
-            if (((MainActivity)context).simpleIdlingResource != null) {
-                ((MainActivity)context).simpleIdlingResource.setIdleState(true);
-            }
         }
     }
 }
