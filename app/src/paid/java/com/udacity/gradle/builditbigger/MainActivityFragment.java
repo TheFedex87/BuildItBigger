@@ -16,13 +16,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.udacity.andjokeslilb.LibMainActivity;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.udacity.gradle.builditbigger.EndpointAsyncTask;
+import com.udacity.gradle.builditbigger.R;
 import com.udacity.gradle.builditbigger.backend.jokesApi.JokesApi;
 
 import java.io.IOException;
@@ -48,14 +47,9 @@ public class MainActivityFragment extends Fragment {
     @BindView(R.id.say_a_joke)
     Button sayAJokeButton;
 
-    @BindView(R.id.adView)
-    AdView mAdView;
-
     private Context context;
 
     private MainActivityFragment thisFragment;
-
-    private InterstitialAd mInterstitialAd;
 
     public MainActivityFragment() {
     }
@@ -74,50 +68,20 @@ public class MainActivityFragment extends Fragment {
 
         ButterKnife.bind(this, root);
 
-        //AdView mAdView = (AdView) root.findViewById(R.id.adView);
-        // Create an ad request. Check logcat output for the hashed device ID to
-        // get test ads on a physical device. e.g.
-        // "Use AdRequest.Builder.addTestDevice("ABCDEF012345") to get test ads on this device."
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-        mAdView.loadAd(adRequest);
-
-        mInterstitialAd = new InterstitialAd(context);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-
         thisFragment = this;
 
         sayAJokeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*JokesProvider jokesProvider = new JokesProvider();
 
-                Intent intent = new Intent(context, LibMainActivity.class);
-                intent.putExtra("JOKE", jokesProvider.getJoke());
-
-                startActivity(intent);*/
                 loader.setVisibility(View.VISIBLE);
                 containerLayout.setVisibility(View.GONE);
-                if (mInterstitialAd.isLoaded())
-                    mInterstitialAd.show();
-
-                //Delay task call in order to show an Interstitial ad
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        new EndpointAsyncTask(thisFragment).execute(context);
-                    }
-                }, 3000);
-
+                new EndpointAsyncTask(thisFragment).execute(context);
             }
         });
 
         return root;
     }
-
 
     public void showContainer(){
         loader.setVisibility(View.GONE);
