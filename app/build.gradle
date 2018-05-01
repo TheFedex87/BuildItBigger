@@ -39,7 +39,7 @@ android {
             dimension "version"
             applicationId "com.udacity.gradle.builditbigger.free"
             dependencies {
-                implementation 'com.google.android.gms:play-services-ads:11.8.0'
+                freeImplementation 'com.google.android.gms:play-services-ads:11.8.0'
                 implementation 'com.android.support.test.espresso:espresso-idling-resource:3.0.1'
             }
         }
