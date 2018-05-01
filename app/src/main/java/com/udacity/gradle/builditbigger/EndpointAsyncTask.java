@@ -21,6 +21,8 @@ import java.io.IOException;
  * Created by feder on 01/05/2018.
  */
 
+//This method as been taken from https://github.com/GoogleCloudPlatform/gradle-appengine-templates/tree/77e9910911d5412e5efede5fa681ec105a0f02ad/HelloEndpoints#2-connecting-your-android-app-to-the-backend
+//as suggested from project specifications
 public class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
 
     private static JokesApi myApiService = null;
