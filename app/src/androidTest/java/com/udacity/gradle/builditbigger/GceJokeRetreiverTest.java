@@ -1,11 +1,14 @@
 package com.udacity.gradle.builditbigger;
 
+import android.support.test.espresso.Espresso;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.udacity.gradle.builditbigger.paid.MainActivity;
+import com.udacity.gradle.builditbigger.MainActivity;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +30,14 @@ import static org.hamcrest.Matchers.not;
 public class GceJokeRetreiverTest {
     private IdlingResource idlingResource;
 
-    @Rule
-    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
+    @Rule public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
+
+    @Before
+    public void registerHidlingResource() {
+        idlingResource = activityTestRule.getActivity().getIdlingResource();
+        Espresso.registerIdlingResources(idlingResource);
+        //IdlingRegistry.getInstance().register(idlingResource);
+    }
 
     @Test
     public void CheckGceReturnsAJoke(){

@@ -103,6 +103,10 @@ public class MainActivityFragment extends Fragment {
                 if (mInterstitialAd.isLoaded())
                     mInterstitialAd.show();
 
+                if (((MainActivity)context).simpleIdlingResource != null) {
+                    ((MainActivity)context).simpleIdlingResource.setIdleState(false);
+                }
+
                 //Delay task call in order to show an Interstitial ad
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -114,6 +118,8 @@ public class MainActivityFragment extends Fragment {
 
             }
         });
+
+        //((MainActivity)context).getIdlingResource();
 
         return root;
     }

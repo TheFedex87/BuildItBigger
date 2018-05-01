@@ -78,5 +78,9 @@ public class EndpointAsyncTask extends AsyncTask<Context, Void, String> {
                 ((MainActivityFragment)fragment).showContainer();
             }
         }, 500);
+
+        if (((MainActivity)context).simpleIdlingResource != null) {
+            ((MainActivity)context).simpleIdlingResource.setIdleState(true);
+        }
     }
 }
